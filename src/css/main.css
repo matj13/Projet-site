@@ -74,6 +74,25 @@ html.lenis body {
   }
 }
 
+/* --- États initiaux des animations (anti-FOUC / anti layout shift) --
+   La classe .has-gsap est posée sur <html> AVANT le rendu (script inline
+   dans <head>), uniquement hors reduced-motion. On masque les éléments
+   animables pour éviter tout flash avant que GSAP prenne la main.
+   Important : `visibility` + `opacity` (pas `display`) → l'espace reste
+   réservé, donc AUCUN layout shift quand l'élément se révèle.            */
+.has-gsap [data-hero-item],
+.has-gsap [data-anim='title'],
+.has-gsap [data-anim='text'],
+.has-gsap [data-stagger] > * {
+  opacity: 0;
+}
+
+/* Les images utilisent un clip-path animé : on les garde visibles mais
+   masquées par le clip pour préserver le layout. */
+.has-gsap [data-anim='image'] {
+  clip-path: inset(0% 0% 100% 0%);
+}
+
 /* --- Mise en page de démonstration -------------------------------- */
 .site-header {
   position: sticky;
@@ -153,4 +172,81 @@ html.lenis body {
 .btn:hover {
   transform: translateY(-2px);
   opacity: 0.95;
+}
+
+/* --- Media / images ------------------------------------------------ */
+/* aspect-ratio + hauteur fixe = l'espace est réservé → pas de layout
+   shift pendant l'apparition progressive. overflow:hidden contient le
+   scale et la parallaxe. */
+.media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  aspect-ratio: 16 / 9;
+  background: #1a1a22;
+}
+
+.media--tall {
+  aspect-ratio: 4 / 5;
+  max-height: 90vh;
+}
+
+.media__img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Fond dégradé qui tient lieu d'image de démo (pas de requête réseau). */
+  background: linear-gradient(135deg, #2a2350 0%, #7c5cff 55%, #23c6c6 100%);
+}
+
+.media--alt .media__img {
+  background: linear-gradient(135deg, #101021 0%, #3a2a6a 50%, #c65c9c 100%);
+}
+
+/* La parallaxe déplace l'image en yPercent : on la sur-dimensionne un
+   peu pour ne jamais laisser de bord vide. */
+[data-parallax] {
+  height: 120%;
+  top: -10%;
+}
+
+/* --- Grille de cards ---------------------------------------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.card {
+  padding: 1.75rem;
+  border-radius: 16px;
+  background: #17171f;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* --- Section épinglée --------------------------------------------- */
+.section--pin {
+  display: block;
+  min-height: 100vh;
+}
+
+.section--pin .inner {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

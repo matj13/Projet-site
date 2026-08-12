@@ -8,39 +8,40 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initSmoothScroll, bindAnchorLinks } from './smooth-scroll.js';
+import { initAnimations } from './animations.js';
 import '../css/main.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function initRevealAnimations() {
-  // Animation d'exemple : chaque section apparaît en douceur au scroll.
-  // Montre que ScrollTrigger fonctionne AVEC Lenis sans réglage en plus.
-  gsap.utils.toArray('[data-reveal]').forEach((el) => {
-    gsap.from(el, {
-      opacity: 0,
-      y: 40,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 80%',
-        toggleActions: 'play none none reverse',
-      },
-    });
-  });
-}
+/** Référence au matchMedia des animations, pour le cleanup (HMR/SPA). */
+let animations = null;
 
 function boot() {
+  // 1. Smooth scroll (branche Lenis <-> ScrollTrigger).
   initSmoothScroll();
+  // 2. Ancres et liens internes.
   bindAnchorLinks();
-  initRevealAnimations();
+  // 3. Animations premium (déclaratives, gérées par matchMedia).
+  animations = initAnimations();
 
-  // Après tout mise en page, on recalcule les positions des triggers.
+  // 4. Anti layout shift : quand images/polices sont chargées, les
+  //    hauteurs peuvent changer → on recalcule les positions des triggers.
   ScrollTrigger.refresh();
+  window.addEventListener('load', () => ScrollTrigger.refresh());
 }
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', boot);
 } else {
   boot();
+}
+
+// --- Hot Module Replacement (Vite) --------------------------------
+// En dev, on nettoie proprement les ScrollTriggers/animations avant le
+// rechargement du module pour éviter les doublons.
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    animations?.revert();
+    ScrollTrigger.getAll().forEach((st) => st.kill());
+  });
 }

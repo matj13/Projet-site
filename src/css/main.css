@@ -1,0 +1,288 @@
+/* ------------------------------------------------------------------
+   Base CSS + intégration Lenis
+   ------------------------------------------------------------------
+   Lenis attend que le scroll se fasse sur <html>. On évite tout
+   `scroll-behavior: smooth` global qui entrerait en conflit avec le
+   lissage JS de Lenis.
+------------------------------------------------------------------ */
+
+:root {
+  --bg: #0e0e11;
+  --fg: #f4f4f5;
+  --accent: #7c5cff;
+  --muted: #a1a1aa;
+  --max-width: 1080px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Intégration Lenis -------------------------------------------- */
+/* Recommandé par Lenis : évite les à-coups pendant le lissage. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Accessibilité : si Lenis n'est pas activé (reduced-motion), on offre
+   quand même un défilement natif doux pour les ancres, et on neutralise
+   les animations d'apparition. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* --- États initiaux des animations (anti-FOUC / anti layout shift) --
+   La classe .has-gsap est posée sur <html> AVANT le rendu (script inline
+   dans <head>), uniquement hors reduced-motion. On masque les éléments
+   animables pour éviter tout flash avant que GSAP prenne la main.
+   Important : `visibility` + `opacity` (pas `display`) → l'espace reste
+   réservé, donc AUCUN layout shift quand l'élément se révèle.            */
+.has-gsap [data-hero-item],
+.has-gsap [data-anim='title'],
+.has-gsap [data-anim='text'],
+.has-gsap [data-stagger] > * {
+  opacity: 0;
+}
+
+/* Les images utilisent un clip-path animé : on les garde visibles mais
+   masquées par le clip pour préserver le layout. */
+.has-gsap [data-anim='image'] {
+  clip-path: inset(0% 0% 100% 0%);
+}
+
+/* --- Mise en page de démonstration -------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(14, 14, 17, 0.7);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.site-header a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.site-header a:hover {
+  color: var(--fg);
+}
+
+.site-header .brand {
+  font-weight: 700;
+  color: var(--fg);
+  margin-right: auto;
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
+
+.section .inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section h1,
+.section h2 {
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 1.05;
+  margin: 0 0 1rem;
+}
+
+.section p {
+  max-width: 60ch;
+  color: var(--muted);
+  font-size: 1.15rem;
+}
+
+.section:nth-child(even) {
+  background: #121218;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+/* --- Îlots react-bits ---------------------------------------------- */
+/* Les îlots remplacent du texte brut par un composant React au montage.
+   Pour éviter tout layout shift, on réserve la hauteur (min-height) et on
+   fait hériter au composant EXACTEMENT les mêmes métriques de police que
+   le texte de fallback. */
+.eyebrow {
+  margin: 0 0 1rem;
+  min-height: 1.2em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow .shiny-text {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+/* GradientText est centré par défaut (margin auto) : on le cale à gauche
+   pour suivre l'alignement du hero. La taille est portée par le conteneur
+   pour que texte de fallback ET composant partagent les mêmes métriques. */
+.hero-accent {
+  margin: 0.25rem 0 1.5rem;
+  min-height: 1.2em;
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-accent .animated-gradient-text {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* --- Media / images ------------------------------------------------ */
+/* aspect-ratio + hauteur fixe = l'espace est réservé → pas de layout
+   shift pendant l'apparition progressive. overflow:hidden contient le
+   scale et la parallaxe. */
+.media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  aspect-ratio: 16 / 9;
+  background: #1a1a22;
+}
+
+.media--tall {
+  aspect-ratio: 4 / 5;
+  max-height: 90vh;
+}
+
+.media__img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Fond dégradé qui tient lieu d'image de démo (pas de requête réseau). */
+  background: linear-gradient(135deg, #2a2350 0%, #7c5cff 55%, #23c6c6 100%);
+}
+
+.media--alt .media__img {
+  background: linear-gradient(135deg, #101021 0%, #3a2a6a 50%, #c65c9c 100%);
+}
+
+/* La parallaxe déplace l'image en yPercent : on la sur-dimensionne un
+   peu pour ne jamais laisser de bord vide. */
+[data-parallax] {
+  height: 120%;
+  top: -10%;
+}
+
+/* --- Grille de cards ---------------------------------------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.card {
+  padding: 1.75rem;
+  border-radius: 16px;
+  background: #17171f;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* --- Section épinglée --------------------------------------------- */
+.section--pin {
+  display: block;
+  min-height: 100vh;
+}
+
+.section--pin .inner {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

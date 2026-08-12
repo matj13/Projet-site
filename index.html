@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projet site — Smooth scroll Lenis + GSAP</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237c5cff'/></svg>"
+    />
+    <meta name="color-scheme" content="dark" />
+    <script>
+      // Anti-FOUC : on marque le document comme "animable" AVANT le rendu
+      // pour masquer proprement les éléments à animer. Désactivé si
+      // l'utilisateur préfère réduire les animations → contenu visible.
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('has-gsap');
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" data-scroll-to="#top">Projet</a>
+      <!-- Ancres internes : gérées par Lenis via bindAnchorLinks() -->
+      <a href="#intro">Intro</a>
+      <a href="#gallery">Galerie</a>
+      <a href="#features">Fonctionnalités</a>
+      <a href="#focus">Focus</a>
+      <a href="#contact">Contact</a>
+    </header>
+
+    <main id="top">
+      <!-- HERO : entrée en cascade au chargement -->
+      <section id="intro" class="section" data-hero>
+        <div class="inner">
+          <!-- Îlot react-bits : ShinyText (fallback texte si reduced-motion) -->
+          <p class="eyebrow" data-hero-item>
+            <span
+              data-react-island="ShinyText"
+              data-props='{"text":"react-bits × Lenis × GSAP","speed":3,"color":"#7a7a85","shineColor":"#ffffff"}'
+              >react-bits × Lenis × GSAP</span
+            >
+          </p>
+          <h1 data-hero-item>Un site haut de gamme, animé avec justesse.</h1>
+          <!-- Îlot react-bits : GradientText (children = texte affiché) -->
+          <div class="hero-accent" data-hero-item>
+            <span
+              data-react-island="GradientText"
+              data-props='{"colors":["#7c5cff","#23c6c6","#c65c9c","#7c5cff"],"animationSpeed":8}'
+              >Fluide. Premium. Accessible.</span
+            >
+          </div>
+          <p data-hero-item>
+            Smooth scroll Lenis synchronisé avec GSAP&nbsp;/ ScrollTrigger.
+            Des animations premium, fluides à 60&nbsp;fps, jamais excessives.
+          </p>
+          <div data-hero-item>
+            <button class="btn" data-scroll-to="#gallery" type="button">
+              Découvrir
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- GALERIE : apparition progressive des images -->
+      <section id="gallery" class="section">
+        <div class="inner">
+          <h2 data-anim="title">Des visuels qui se révèlent.</h2>
+          <p data-anim="text">
+            Chaque image apparaît en douceur, sans à-coup ni décalage de
+            mise en page.
+          </p>
+          <div class="cards" style="margin-top: 2rem">
+            <figure class="media" data-anim="image">
+              <div class="media__img"></div>
+            </figure>
+            <figure class="media media--alt" data-anim="image">
+              <div class="media__img"></div>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- PARALLAXE : grande image -->
+      <section class="section" style="padding-block: 0">
+        <div class="inner">
+          <figure class="media media--tall" data-anim="image">
+            <div class="media__img" data-parallax data-parallax-speed="10"></div>
+          </figure>
+        </div>
+      </section>
+
+      <!-- CARDS : stagger -->
+      <section id="features" class="section">
+        <div class="inner">
+          <h2 data-anim="title">Fonctionnalités.</h2>
+          <p data-anim="text">
+            Les cartes apparaissent en cascade au scroll.
+          </p>
+          <div class="cards" data-stagger>
+            <article class="card">
+              <h3>Fluide</h3>
+              <p>Animations composited (transform/opacity) à 60&nbsp;fps.</p>
+            </article>
+            <article class="card">
+              <h3>Accessible</h3>
+              <p>Respect de <code>prefers-reduced-motion</code>.</p>
+            </article>
+            <article class="card">
+              <h3>Propre</h3>
+              <p>ScrollTriggers nettoyés via <code>matchMedia</code>.</p>
+            </article>
+            <article class="card">
+              <h3>Réutilisable</h3>
+              <p>Piloté par de simples attributs <code>data-*</code>.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION ÉPINGLÉE (desktop uniquement) -->
+      <section id="focus" class="section section--pin" data-pin>
+        <div class="inner" data-pin-content>
+          <h2 data-anim="title">Un focus, épinglé le temps d'un scroll.</h2>
+          <p data-anim="text">
+            Une section sticky discrète, pertinente, sans casser le flux.
+          </p>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section">
+        <div class="inner">
+          <h2 data-anim="title">Contact.</h2>
+          <p data-anim="text">Remontez en haut pour retester le smooth scroll.</p>
+          <button class="btn" data-scroll-to="#top" type="button">
+            Retour en haut
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

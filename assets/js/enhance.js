@@ -54,6 +54,19 @@
   // ScrollTrigger recalculé à chaque frame de scroll Lenis.
   lenis.on('scroll', ScrollTrigger.update);
 
+  // --- Barre de progression de lecture (fin liseré en haut) ----------
+  // Créée en JS (aucune modif du HTML/CSS des pages). Discrète et premium.
+  var progress = document.createElement('div');
+  progress.setAttribute('aria-hidden', 'true');
+  progress.style.cssText =
+    'position:fixed;top:0;left:0;height:3px;width:0;z-index:200;' +
+    'background:linear-gradient(90deg,#C17A3E,#E4C79A);' +
+    'transform-origin:left;pointer-events:none;will-change:width';
+  document.body.appendChild(progress);
+  lenis.on('scroll', function (e) {
+    progress.style.width = (Math.max(0, Math.min(1, e.progress || 0)) * 100) + '%';
+  });
+
   // --- Ancres internes gérées par Lenis (offset header) --------------
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="#"]');

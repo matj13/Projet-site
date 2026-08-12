@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projet site — Smooth scroll Lenis</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" data-scroll-to="#top">Projet</a>
+      <!-- Ancres internes : gérées par Lenis via bindAnchorLinks() -->
+      <a href="#intro">Intro</a>
+      <a href="#features">Fonctionnalités</a>
+      <a href="#contact">Contact</a>
+    </header>
+
+    <main id="top">
+      <section id="intro" class="section">
+        <div class="inner" data-reveal>
+          <h1>Un smooth scroll premium, sans compromis.</h1>
+          <p>
+            Défilement fluide propulsé par Lenis, câblé proprement avec
+            GSAP&nbsp;/ ScrollTrigger et respectueux de
+            <code>prefers-reduced-motion</code>.
+          </p>
+          <!-- Bouton qui scrolle vers une section via data-scroll-to -->
+          <button class="btn" data-scroll-to="#features" type="button">
+            Découvrir
+          </button>
+        </div>
+      </section>
+
+      <section id="features" class="section">
+        <div class="inner" data-reveal>
+          <h2>Fluide, naturel, accessible.</h2>
+          <p>
+            Le scroll tactile reste natif sur mobile, les ancres et boutons
+            continuent de fonctionner, et aucune animation existante n'est
+            cassée : ScrollTrigger est synchronisé avec Lenis.
+          </p>
+          <a class="btn" href="#contact">Aller au contact</a>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="inner" data-reveal>
+          <h2>Contact</h2>
+          <p>Remontez en haut pour retester le smooth scroll.</p>
+          <button class="btn" data-scroll-to="#top" type="button">
+            Retour en haut
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

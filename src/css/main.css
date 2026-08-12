@@ -1,0 +1,156 @@
+/* ------------------------------------------------------------------
+   Base CSS + intégration Lenis
+   ------------------------------------------------------------------
+   Lenis attend que le scroll se fasse sur <html>. On évite tout
+   `scroll-behavior: smooth` global qui entrerait en conflit avec le
+   lissage JS de Lenis.
+------------------------------------------------------------------ */
+
+:root {
+  --bg: #0e0e11;
+  --fg: #f4f4f5;
+  --accent: #7c5cff;
+  --muted: #a1a1aa;
+  --max-width: 1080px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Intégration Lenis -------------------------------------------- */
+/* Recommandé par Lenis : évite les à-coups pendant le lissage. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Accessibilité : si Lenis n'est pas activé (reduced-motion), on offre
+   quand même un défilement natif doux pour les ancres, et on neutralise
+   les animations d'apparition. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* --- Mise en page de démonstration -------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(14, 14, 17, 0.7);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.site-header a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.site-header a:hover {
+  color: var(--fg);
+}
+
+.site-header .brand {
+  font-weight: 700;
+  color: var(--fg);
+  margin-right: auto;
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
+
+.section .inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section h1,
+.section h2 {
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 1.05;
+  margin: 0 0 1rem;
+}
+
+.section p {
+  max-width: 60ch;
+  color: var(--muted);
+  font-size: 1.15rem;
+}
+
+.section:nth-child(even) {
+  background: #121218;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}

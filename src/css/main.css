@@ -174,6 +174,42 @@ html.lenis body {
   opacity: 0.95;
 }
 
+/* --- Îlots react-bits ---------------------------------------------- */
+/* Les îlots remplacent du texte brut par un composant React au montage.
+   Pour éviter tout layout shift, on réserve la hauteur (min-height) et on
+   fait hériter au composant EXACTEMENT les mêmes métriques de police que
+   le texte de fallback. */
+.eyebrow {
+  margin: 0 0 1rem;
+  min-height: 1.2em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow .shiny-text {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+/* GradientText est centré par défaut (margin auto) : on le cale à gauche
+   pour suivre l'alignement du hero. La taille est portée par le conteneur
+   pour que texte de fallback ET composant partagent les mêmes métriques. */
+.hero-accent {
+  margin: 0.25rem 0 1.5rem;
+  min-height: 1.2em;
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-accent .animated-gradient-text {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
 /* --- Media / images ------------------------------------------------ */
 /* aspect-ratio + hauteur fixe = l'espace est réservé → pas de layout
    shift pendant l'apparition progressive. overflow:hidden contient le

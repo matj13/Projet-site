@@ -33,7 +33,23 @@
       <!-- HERO : entrée en cascade au chargement -->
       <section id="intro" class="section" data-hero>
         <div class="inner">
+          <!-- Îlot react-bits : ShinyText (fallback texte si reduced-motion) -->
+          <p class="eyebrow" data-hero-item>
+            <span
+              data-react-island="ShinyText"
+              data-props='{"text":"react-bits × Lenis × GSAP","speed":3,"color":"#7a7a85","shineColor":"#ffffff"}'
+              >react-bits × Lenis × GSAP</span
+            >
+          </p>
           <h1 data-hero-item>Un site haut de gamme, animé avec justesse.</h1>
+          <!-- Îlot react-bits : GradientText (children = texte affiché) -->
+          <div class="hero-accent" data-hero-item>
+            <span
+              data-react-island="GradientText"
+              data-props='{"colors":["#7c5cff","#23c6c6","#c65c9c","#7c5cff"],"animationSpeed":8}'
+              >Fluide. Premium. Accessible.</span
+            >
+          </div>
           <p data-hero-item>
             Smooth scroll Lenis synchronisé avec GSAP&nbsp;/ ScrollTrigger.
             Des animations premium, fluides à 60&nbsp;fps, jamais excessives.

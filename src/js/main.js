@@ -9,19 +9,24 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initSmoothScroll, bindAnchorLinks } from './smooth-scroll.js';
 import { initAnimations } from './animations.js';
+import { mountReactIslands } from '../react/islands.jsx';
 import '../css/main.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
 /** Référence au matchMedia des animations, pour le cleanup (HMR/SPA). */
 let animations = null;
+/** Cleanup des îlots React (démontage). */
+let unmountIslands = null;
 
 function boot() {
   // 1. Smooth scroll (branche Lenis <-> ScrollTrigger).
   initSmoothScroll();
   // 2. Ancres et liens internes.
   bindAnchorLinks();
-  // 3. Animations premium (déclaratives, gérées par matchMedia).
+  // 3. Îlots React (composants react-bits) montés dans le DOM vanilla.
+  unmountIslands = mountReactIslands();
+  // 4. Animations premium (déclaratives, gérées par matchMedia).
   animations = initAnimations();
 
   // 4. Anti layout shift : quand images/polices sont chargées, les
@@ -42,6 +47,7 @@ if (document.readyState === 'loading') {
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
     animations?.revert();
+    unmountIslands?.();
     ScrollTrigger.getAll().forEach((st) => st.kill());
   });
 }

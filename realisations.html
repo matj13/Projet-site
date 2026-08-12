@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Galerie des réalisations JS Wood : terrasses, pergolas, piscines, jardins et aménagements extérieurs en Provence.">
+<title>Nos réalisations — JS Wood</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap');
+:root{--sand:#F4EEE2;--cream:#FBF8F1;--forest:#2E3A26;--forest-d:#212a1c;--wood:#C17A3E;--wood2:#9c5f2c;--gold:#E4C79A;--ink:#242A1E;--mute:#7C8168;--line:#E4DCCC;--ease:cubic-bezier(.19,1,.22,1)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Inter,sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}img{display:block;max-width:100%}.wrap{max-width:1380px;margin:auto;padding:0 40px}
+.bar{position:sticky;top:0;z-index:50;height:78px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;padding:0 36px;background:rgba(251,248,241,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.logo{font-family:Fraunces,serif;font-size:28px;font-weight:600;color:var(--forest)}.logo span{color:var(--wood)}.nav{display:flex;justify-content:center;gap:4px}.nav a{font-size:12.5px;font-weight:600;padding:9px 10px;border-radius:999px;white-space:nowrap}.nav a:hover,.nav a.active{background:rgba(36,42,30,.05);color:var(--wood)}.actions{display:flex;gap:10px;align-items:center}.btn{padding:13px 19px;border-radius:9px;font-size:13px;font-weight:700}.btn-wood{background:var(--wood);color:#fff;box-shadow:0 14px 30px -16px rgba(193,122,62,.7)}.phone{padding:12px 15px;border-radius:999px;border:1px solid var(--line);font-weight:700;font-size:13px;white-space:nowrap}
+.burger{display:none;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:transparent;align-items:center;justify-content:center;flex-direction:column;gap:4px}.burger i{width:18px;height:2px;background:var(--ink);display:block}.mpanel{display:none;position:fixed;inset:70px 0 0;z-index:49;background:var(--cream);padding:30px 22px;flex-direction:column;gap:6px}.mpanel.show{display:flex}.mpanel a{font-family:Fraunces,serif;font-size:26px;padding:12px 4px;border-bottom:1px solid var(--line)}
+.hero{padding:90px 0 66px;text-align:center;background:linear-gradient(180deg,#f7f1e7 0%,#fbf8f1 100%)}.eyebrow{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--wood)}.hero h1{font-family:Fraunces,serif;font-size:clamp(52px,7vw,92px);font-weight:500;line-height:.98;margin-top:16px}.hero h1 em{color:var(--wood);font-style:italic}.hero p{max-width:50ch;margin:18px auto 0;color:var(--mute);font-size:16px}.down{display:inline-flex;margin-top:28px;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);align-items:center;justify-content:center;color:var(--wood)}
+.project-row{padding:72px 0;background:var(--cream)}.project-row.alt{background:var(--sand)}.project-carousel{max-width:1120px;margin:0 auto}.carousel-stage{position:relative;min-height:610px;height:min(72vh,760px);border-radius:24px;overflow:hidden;background:#e7e1d5;box-shadow:0 34px 80px -54px rgba(36,42,30,.58);display:flex;align-items:center;justify-content:center}.carousel-image{width:100%;height:100%;object-fit:contain;object-position:center;transition:opacity .22s ease,transform .5s var(--ease)}.carousel-stage.changing .carousel-image{opacity:.25;transform:scale(.992)}
+.carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(25,30,21,.62);backdrop-filter:blur(10px);color:#fff;font-size:38px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s var(--ease);box-shadow:0 10px 30px -18px rgba(0,0,0,.8)}.carousel-arrow:hover{background:var(--wood);transform:translateY(-50%) scale(1.06)}.carousel-arrow.prev{left:22px}.carousel-arrow.next{right:22px}.carousel-count{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);padding:7px 12px;border-radius:999px;background:rgba(25,30,21,.62);backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:700;letter-spacing:.08em}
+.cta{padding:88px 20px;text-align:center;background:var(--forest-d);color:#fff}.cta h2{font-family:Fraunces,serif;font-size:clamp(40px,5vw,65px);font-weight:500}.cta h2 em{color:var(--gold);font-style:italic}.cta p{color:rgba(255,255,255,.7);margin:12px auto 25px;max-width:44ch}.foot{padding:28px 0;text-align:center;background:#181d15;color:#8f9783;font-size:12px}
+@media(max-width:1080px){.nav{display:none}.phone{display:none}.burger{display:flex}.carousel-stage{height:64vh;min-height:520px}}
+@media(max-width:680px){.wrap{padding:0 16px}.bar{height:70px;padding:0 16px;grid-template-columns:auto 1fr auto}.actions .btn,.actions .phone{display:none}.actions{justify-self:end}.hero{padding:56px 0 40px}.hero h1{font-size:clamp(44px,14vw,68px)}.project-row{padding:34px 0}.carousel-stage{height:68vh;min-height:430px;border-radius:16px}.carousel-arrow{width:44px;height:44px;font-size:32px}.carousel-arrow.prev{left:10px}.carousel-arrow.next{right:10px}.carousel-count{bottom:10px}}
+</style></head><body>
+<header class="bar"><a class="logo" href="index.html">JS <span>Wood</span></a><nav class="nav"><a href="index.html#metier">Notre métier</a><a href="index.html#services">Nos services</a><a href="index.html#avant-apres">Avant / Après</a><a href="projets-signature.html">Projets Signature</a><a class="active" href="realisations.html">Nos réalisations</a><a href="index.html#avis">Avis</a><a href="index.html#contact">Contact</a></nav><div class="actions"><a class="btn btn-wood" href="index.html#contact">Devis gratuit</a><a class="phone" href="tel:+33668752245">✆ 06 68 75 22 45</a><button class="burger" id="burger" aria-label="Ouvrir le menu"><i></i><i></i><i></i></button></div></header>
+<nav class="mpanel" id="mpanel"><a href="index.html#metier">Notre métier</a><a href="index.html#services">Nos services</a><a href="index.html#avant-apres">Avant / Après</a><a href="projets-signature.html">Projets Signature</a><a href="realisations.html">Nos réalisations</a><a href="index.html#avis">Avis</a><a href="index.html#contact">Contact</a></nav>
+<section class="hero"><div class="wrap"><div class="eyebrow">JS Wood · Réalisations</div><h1>Nos <em>réalisations.</em></h1><p>Parcourez chaque chantier image par image.</p><a class="down" href="#galerie" aria-label="Voir la galerie">↓</a></div></section>
+<main id="galerie"><section class="project-row" aria-label="Projet de réalisation 1">
+  <div class="wrap">
+    <div class="project-carousel" data-carousel data-index="0" aria-label="Galerie du projet 1">
+      <div class="carousel-stage">
+        <img class="carousel-image" src="assets/realisations/projet-1/real-1-01.jpg" alt="Réalisation JS Wood — projet 1" loading="lazy">
+        <button class="carousel-arrow prev" type="button" aria-label="Photo précédente">‹</button>
+        <button class="carousel-arrow next" type="button" aria-label="Photo suivante">›</button>
+        <div class="carousel-count" aria-live="polite"><span>1</span> / 4</div>
+      </div>
+      <div class="carousel-data" hidden>assets/realisations/projet-1/real-1-01.jpg|assets/realisations/projet-1/real-1-02.jpg|assets/realisations/projet-1/real-1-03.jpg|assets/realisations/projet-1/real-1-04.jpg</div>
+    </div>
+  </div>
+</section><section class="project-row alt" aria-label="Projet de réalisation 2">
+  <div class="wrap">
+    <div class="project-carousel" data-carousel data-index="0" aria-label="Galerie du projet 2">
+      <div class="carousel-stage">
+        <img class="carousel-image" src="assets/realisations/projet-2/real-2-01.jpg" alt="Réalisation JS Wood — projet 2" loading="lazy">
+        <button class="carousel-arrow prev" type="button" aria-label="Photo précédente">‹</button>
+        <button class="carousel-arrow next" type="button" aria-label="Photo suivante">›</button>
+        <div class="carousel-count" aria-live="polite"><span>1</span> / 4</div>
+      </div>
+      <div class="carousel-data" hidden>assets/realisations/projet-2/real-2-01.jpg|assets/realisations/projet-2/real-2-02.jpg|assets/realisations/projet-2/real-2-03.jpg|assets/realisations/projet-2/real-2-04.jpg</div>
+    </div>
+  </div>
+</section><section class="project-row" aria-label="Projet de réalisation 3">
+  <div class="wrap">
+    <div class="project-carousel" data-carousel data-index="0" aria-label="Galerie du projet 3">
+      <div class="carousel-stage">
+        <img class="carousel-image" src="assets/realisations/projet-3/real-3-01.jpg" alt="Réalisation JS Wood — projet 3" loading="lazy">
+        <button class="carousel-arrow prev" type="button" aria-label="Photo précédente">‹</button>
+        <button class="carousel-arrow next" type="button" aria-label="Photo suivante">›</button>
+        <div class="carousel-count" aria-live="polite"><span>1</span> / 8</div>
+      </div>
+      <div class="carousel-data" hidden>assets/realisations/projet-3/real-3-01.jpg|assets/realisations/projet-3/real-3-02.jpg|assets/realisations/projet-3/real-3-03.jpg|assets/realisations/projet-3/real-3-04.jpg|assets/realisations/projet-3/real-3-05.jpg|assets/realisations/projet-3/real-3-06.jpg|assets/realisations/projet-3/real-3-07.jpg|assets/realisations/projet-3/real-3-08.jpg</div>
+    </div>
+  </div>
+</section><section class="project-row alt" aria-label="Projet de réalisation 4">
+  <div class="wrap">
+    <div class="project-carousel" data-carousel data-index="0" aria-label="Galerie du projet 4">
+      <div class="carousel-stage">
+        <img class="carousel-image" src="assets/realisations/projet-4/real-4-01.jpg" alt="Réalisation JS Wood — projet 4" loading="lazy">
+        <button class="carousel-arrow prev" type="button" aria-label="Photo précédente">‹</button>
+        <button class="carousel-arrow next" type="button" aria-label="Photo suivante">›</button>
+        <div class="carousel-count" aria-live="polite"><span>1</span> / 5</div>
+      </div>
+      <div class="carousel-data" hidden>assets/realisations/projet-4/real-4-01.jpg|assets/realisations/projet-4/real-4-02.jpg|assets/realisations/projet-4/real-4-03.jpg|assets/realisations/projet-4/real-4-04.jpg|assets/realisations/projet-4/real-4-05.jpg</div>
+    </div>
+  </div>
+</section><section class="project-row" aria-label="Projet de réalisation 5">
+  <div class="wrap">
+    <div class="project-carousel" data-carousel data-index="0" aria-label="Galerie du projet 5">
+      <div class="carousel-stage">
+        <img class="carousel-image" src="assets/realisations/projet-5/real-5-01.jpg" alt="Réalisation JS Wood — projet 5" loading="lazy">
+        <button class="carousel-arrow prev" type="button" aria-label="Photo précédente">‹</button>
+        <button class="carousel-arrow next" type="button" aria-label="Photo suivante">›</button>
+        <div class="carousel-count" aria-live="polite"><span>1</span> / 6</div>
+      </div>
+      <div class="carousel-data" hidden>assets/realisations/projet-5/real-5-01.jpg|assets/realisations/projet-5/real-5-02.jpg|assets/realisations/projet-5/real-5-03.jpg|assets/realisations/projet-5/real-5-04.jpg|assets/realisations/projet-5/real-5-05.jpg|assets/realisations/projet-5/real-5-06.jpg</div>
+    </div>
+  </div>
+</section></main>
+<section class="cta"><h2>Votre extérieur, <em>le prochain ?</em></h2><p>Parlons de votre projet et imaginons ensemble un aménagement qui vous ressemble.</p><a class="btn btn-wood" href="index.html#contact">Demander un devis gratuit →</a></section><footer class="foot">JS Wood Sarl · Lançon-de-Provence · Conception : MJ Creative Studio</footer>
+<script>
+const burger=document.getElementById('burger'),panel=document.getElementById('mpanel');if(burger){burger.addEventListener('click',()=>panel.classList.toggle('show'));panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>panel.classList.remove('show')));}
+document.querySelectorAll('[data-carousel]').forEach(carousel=>{
+  const stage=carousel.querySelector('.carousel-stage'),img=carousel.querySelector('.carousel-image'),count=carousel.querySelector('.carousel-count span');
+  const images=carousel.querySelector('.carousel-data').textContent.split('|').filter(Boolean);let index=0;
+  function show(next){index=(next+images.length)%images.length;stage.classList.add('changing');const preload=new Image();preload.onload=()=>{img.src=images[index];count.textContent=index+1;requestAnimationFrame(()=>stage.classList.remove('changing'));};preload.src=images[index];}
+  carousel.querySelector('.prev').addEventListener('click',()=>show(index-1));carousel.querySelector('.next').addEventListener('click',()=>show(index+1));
+  let startX=null;stage.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});stage.addEventListener('touchend',e=>{if(startX===null)return;const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>45)show(index+(dx<0?1:-1));startX=null},{passive:true});
+});
+</script>
+<!-- Couche premium : smooth scroll Lenis + GSAP ScrollTrigger (auto-hébergés) -->
+<script src="assets/js/vendor/lenis.min.js"></script>
+<script src="assets/js/vendor/gsap.min.js"></script>
+<script src="assets/js/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/js/enhance.js"></script>
+</body></html>
